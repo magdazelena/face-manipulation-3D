@@ -2,9 +2,10 @@ import { Canvas } from "@react-three/fiber";
 import { useEffect, useState, useLayoutEffect, useRef } from "react";
 import * as THREE from "three";
 import { runDetector } from "../utils/detector.js";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, CameraControls, OrthographicCamera } from '@react-three/drei'
 export function Scene({ video }) {
   const [points, setPoints] = useState([]);
+  const virtualCamera = useRef(null)
   useEffect(() => {
     if (!video) return;
     const fun = async () => {
@@ -25,19 +26,24 @@ export function Scene({ video }) {
   }, [points]);
 
   return (
-    <Canvas style={{ height: "100vh" }} camera={{ fov: 50, zoom: 3, position: [3, 3, 3] }}>
+    <Canvas style={{ height: "50vh" }}>
       <color attach="background" args={["#f5efe6"]} />
-      <ambientLight />
-      <pointLight position={[10, 10, 10]} />
-      <points>
-        <bufferGeometry attach="geometry" ref={ref} />
+      <OrbitControls />
+    
+        <ambientLight />
+        <pointLight position={[10, 10, 10]} />
+        <points>
+          <bufferGeometry attach="geometry" ref={ref} />
 
-        <pointsMaterial
-          attach="material"
-          color="0x000000"
-          size={1}
-        />
-      </points>
+          <pointsMaterial
+
+            attach="material"
+            color="0x0ff000"
+            size='0.1'
+          />
+        </points>
+        <gridHelper args={[100, 10]} />
+        {/* <OrthographicCamera name="FBO Camera" ref={virtualCamera} position={[0, 0, 5]} /> */}
     </Canvas>
   );
 }
