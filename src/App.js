@@ -4,8 +4,8 @@ import "@tensorflow/tfjs";
 import "@tensorflow/tfjs-backend-webgl";
 import "@mediapipe/face_mesh";
 import Webcam from "react-webcam";
-import { runDetector } from "./utils/detector";
 import sample from "./assets/sample.jpeg";
+import { Scene } from "./scene/scene.jsx";
 
 const inputResolution = {
   width: 1080,
@@ -17,14 +17,14 @@ const videoConstraints = {
   facingMode: "user",
 };
 function App() {
-  const canvasRef = useRef(null);
   const [loaded, setLoaded] = useState(false);
+  const videoRef = useRef(null);
 
   const handleVideoLoad = (videoNode) => {
     const video = videoNode.target;
     //if (video.readyState !== 4) return;
     if (loaded) return;
-    runDetector(video, canvasRef.current);
+    videoRef.current = videoNode.target;
     setLoaded(true);
   };
   return (
@@ -37,12 +37,8 @@ function App() {
         onLoadedData={handleVideoLoad}
       /> */}
       <img src={sample} style={{ width: 500 }} onLoad={handleVideoLoad} />
-      <canvas
-        ref={canvasRef}
-        width={inputResolution.width}
-        height={inputResolution.height}
-        style={{ position: "absolute" }}
-      />
+
+      <Scene video={videoRef.current} />
       {loaded ? <></> : <header>Loading...</header>}
     </div>
   );
