@@ -13,25 +13,42 @@ export const FaceMesh = ({ points }) => {
         "position",
         new THREE.BufferAttribute(triangulate(points), 3)
       );
+      ref.current.attributes.position.setUsage(THREE.DynamicDrawUsage);
       ref.current.computeVertexNormals();
       ref.current.computeBoundingSphere();
     }
   }, [points]);
   return (
-    <>
-      <bufferGeometry attach="geometry" ref={ref} />
-      {ref.current && (
-        <mesh
-          ref={meshRef}
-          rotation={[0, Math.PI, Math.PI]}
-          position={[-200, 50, 0]}
-          geometry={ref.current}
-          material={
-            new THREE.MeshLambertMaterial({ color: "purple", wireframe: true })
-          }
-        />
-      )}
-    </>
+    <group rotation={[0, Math.PI, Math.PI]} position={[-200, 50, 0]}>
+      <points>
+        <bufferGeometry attach="geometry" ref={ref} />
+        {ref.current && (
+          <>
+            <mesh
+              ref={meshRef}
+              geometry={ref.current}
+              material={
+                new THREE.MeshPhongMaterial({
+                  color: "#543768",
+                  emissive: "#6d2626",
+                  specular: "#e6dbdb",
+                  shininess: 63.0,
+                  transparent: true,
+                  opacity: 0.8,
+                })
+              }
+            />
+
+            <pointsMaterial
+              size={4}
+              color={"#b91372"}
+              transparent
+              sizeAttenuation={true}
+            />
+          </>
+        )}
+      </points>
+    </group>
   );
 };
 

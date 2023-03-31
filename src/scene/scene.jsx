@@ -30,11 +30,11 @@ export function Scene({ video }) {
 
   return (
     <Canvas style={{ height: "100vh" }} ref={canvasRef}>
-      <color attach="background" args={["#f5efe6"]} />
+      <color attach="background" args={["#0E0004"]} />
 
       <OrbitControls gridHelper />
       <ambientLight />
-      <pointLight position={[10, 10, 10]} />
+      <pointLight position={[10, 10, 100]} color="#fa198b" />
 
       <FaceMesh points={points} />
       <gridHelper args={[100, 10]} />
