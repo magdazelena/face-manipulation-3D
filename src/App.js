@@ -36,7 +36,11 @@ function App() {
         videoConstraints={videoConstraints}
         onLoadedData={handleVideoLoad}
       /> */}
-      <img src={sample} style={{ width: 500 }} onLoad={handleVideoLoad} />
+      <img
+        src={sample}
+        style={{ width: 200, opacity: 0 }}
+        onLoad={handleVideoLoad}
+      />
 
       <Scene video={videoRef.current} />
       {loaded ? <></> : <header>Loading...</header>}
