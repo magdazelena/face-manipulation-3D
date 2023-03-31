@@ -1,13 +1,14 @@
 import * as faceLandmarksDetection from "@tensorflow-models/face-landmarks-detection";
-export const runDetector = async (input) => {
+
+export const runDetector = async () => {
   const model = faceLandmarksDetection.SupportedModels.MediaPipeFaceMesh;
   const detectorConfig = {
     runtime: "tfjs",
   };
-  const detector = await faceLandmarksDetection.createDetector(
-    model,
-    detectorConfig
-  );
+  return faceLandmarksDetection.createDetector(model, detectorConfig);
+};
+
+export const detect = async (landmarks, input) => {
   const estimationConfig = { flipHorizontal: false };
-  return detector.estimateFaces(input, estimationConfig);
+  return landmarks.estimateFaces(input, estimationConfig);
 };

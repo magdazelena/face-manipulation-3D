@@ -22,25 +22,25 @@ function App() {
 
   const handleVideoLoad = (videoNode) => {
     const video = videoNode.target;
-    //if (video.readyState !== 4) return;
+    if (video.readyState !== 4) return;
     if (loaded) return;
     videoRef.current = videoNode.target;
     setLoaded(true);
   };
   return (
     <div>
-      {/* <Webcam
+      <Webcam
         width={inputResolution.width}
         height={inputResolution.height}
         style={{ visibility: "hidden", position: "absolute" }}
         videoConstraints={videoConstraints}
         onLoadedData={handleVideoLoad}
-      /> */}
-      <img
+      />
+      {/* <img
         src={sample}
         style={{ width: 200, opacity: 0 }}
         onLoad={handleVideoLoad}
-      />
+      /> */}
 
       <Scene video={videoRef.current} />
       {loaded ? <></> : <header>Loading...</header>}
